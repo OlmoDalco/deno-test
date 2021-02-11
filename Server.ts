@@ -1,15 +1,15 @@
 import { serve} from "https://deno.land/std@0.86.0/http/server.ts";
 import { Status } from "https://deno.land/std@0.53.0/http/http_status.ts";
-import {Person} from "https://github.com/OlmoDalco/deno-test/raw/main/Person.ts"
+import { v4 as uuid } from "https://deno.land/std@$STD_VERSION/uuid/mod.ts";
+
 class Service {
-    Person:Person
+    id:string
     constructor() {
+        this.id = uuid()
         this.start()
-        this.Person = new Person()
     }
     private async start() {
         let s = serve({ port: 8000 })
-        console.log(this.Person.name)
         for await (const req of s) {
             const headers = new Headers();
             headers.append("Content-Type", "application/json")
